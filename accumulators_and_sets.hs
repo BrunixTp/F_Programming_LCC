@@ -29,6 +29,12 @@ c = [[x | x <- [1..y]] | y <- [1..5]]
 
 d = [[1 | x <- [1..y]] | y <- [1..5]]
 
+-- e [1,2,6,24,120,720]
+
+e = [fact x | x <- [1..6]]
+fact :: Int -> Int
+fact 0 = 1
+fact n = n * fact (n-1)
 -- 3 D
 digitAlpha :: String -> (String, String)
 digitAlpha [] = ([], []) 
