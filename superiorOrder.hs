@@ -41,3 +41,42 @@ inserirOn _ a [] = [a]
 inserirOn f n (x:xs) | f n <= f x = n:x:xs
                      | otherwise = x: inserirOn f n xs
 
+-- 3
+type Mat a = [[a]]
+
+{- 
+[ 1 2 3  ]
+| 0 4 5  |
+[ 0 0 6  ]
+ [[1,2,3], [0,4,5], [0,0,6]]
+ -}
+
+-- a
+dimOK :: Mat a -> Bool 
+dimOk [[]] = False
+dimOK (l:ls) = all (\l' -> length l' == length l) ls
+
+-- b
+
+dimMat :: Mat a -> (Int, Int)
+dimMat [] = (0,0)
+dimMat (l:ls) = if dimOK (l:ls) then (length l, length (l:ls))
+  else error "Not well defined"
+
+-- c
+
+addMat :: Num a => Mat a -> Mat a -> Mat a
+addMat = zipWith(zipWith (+))
+
+-- d 
+
+transpose :: Mat a -> Mat a
+transpose ([]:_) = []
+transpose l = map head l: transpose(map tail l)
+
+-- e 
+
+multMat :: Num a => Mat a -> Mat a -> Mat a 
+multMat m1 m2 = [[sum(zipWith(*) l1 l2) | l2 <- transpose m2] | l1 <- m1]
+
+-- f
