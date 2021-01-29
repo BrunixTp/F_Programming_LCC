@@ -118,6 +118,49 @@ data Grade = Aprov Int
 type Class = BTree Student -- Binary Search Tree (FIltered by number)
 
 -- a
-inscNum :: Number -> Class -> Bool -- verifies if a student is registered
+inscNum :: Number -> Class -> Bool -- verifies if a student is registered via number
 inscNum _ Empty = False
 inscNum x (Node (n,_,_,_) e d) = n == x || inscNum x (if x < n then e else d)
+
+-- b
+inscNome :: Name -> Class -> Bool -- verifies if a students name is regist
+inscNome _ Empty = False
+inscNome x (Node (_,name,_,_) e d) = x == name || inscNome x e || inscNome x d
+
+-- c
+trabEst :: Class -> [(Number, Name)] -- returns a list of Student-Workers
+trabEst Empty = []
+trabEst (Node (n,name,ver,_) e d) = case ver of 
+  TE -> (n,name):trabEst e ++ trabEst d
+  _ -> trabEst e ++ trabEst d
+
+-- d
+nota :: Number -> Class -> Maybe Grade
+nota _ Empty         = Nothing
+nota n (Node (n',_,_,grade) e d) | n == n' = Just grade
+                                 | n < n' = nota n e
+                                 | n > n' = nota n d
+                                 | otherwise = Nothing  
+
+-- e 
+{- percFaltas :: Class -> Float -- percentage of students who missed evaluation
+percFaltas Empty        = 0.0
+percFaltas (Node (a,b,c,grade) e d) = case grade of
+  Skipped -> (( 1 + percFaltas e + percFaltas d) /  countStudents (Node (a,b,c,grade) e d)) * 100
+  _ -> ((percFaltas e + percFaltas d) / countStudents (Node (a,b,c,grade) e d )) * 100
+ where
+  countStudents Empty = 0
+  countStudents (Node n e d) = 1 + countStudents e + countStudents d
+ -}
+percFaltas :: Class -> Float
+percFaltas Empty = 0
+percFaltas turma = somaDasFaltas (turma) / contaAlunos (turma) * 100
+ where
+ somaDasFaltas :: Class -> Float
+ somaDasFaltas (Node (_,_,_,classificacao) e d) = case classificacao of
+  Skipped -> 1 + percFaltas e + percFaltas d 
+  _      -> 0 + percFaltas e + percFaltas d
+ contaAlunos Empty = 0
+ contaAlunos (Node n e d) = 1 + contaAlunos e + contaAlunos d
+-- f 
+--mediaAprov :: Class -> Float
