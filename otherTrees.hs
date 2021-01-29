@@ -28,6 +28,20 @@ calculateExpInt er = case er of
  Mult e1 e2 -> (calculateExpInt e1) * (calculateExpInt e2) 
 
 -- b
-
-
+infixExpInt :: ExpInt -> String
+infixExpInt exp = case exp of
+  Const n    -> show n
+  Sim e1     -> "-(" ++ infixExpInt e1 ++ ")"
+  Sum e1 e2  -> "("  ++ infixExpInt e1 ++ " + " ++ infixExpInt e2 ++ ")"
+  Sub e1 e2  -> "("  ++ infixExpInt e1 ++ " - " ++ infixExpInt e2 ++ ")"
+  Mult e1 e2 -> "("  ++ infixExpInt e1 ++ " * " ++ infixExpInt e2 ++ ")"
+  
+-- c 
+posfixExpInt :: ExpInt -> String
+posfixExpInt exp = case exp of
+  Const n    -> show n
+  Sim e1     -> posfixExpInt e1 ++ " " ++ " - "
+  Sum e1 e2  -> posfixExpInt e1 ++ " " ++ posfixExpInt e2 ++ " + "
+  Sub e1 e2  -> posfixExpInt e1 ++ " " ++ posfixExpInt e2 ++ " - "
+  Mult e1 e2 -> posfixExpInt e1 ++ " " ++ posfixExpInt e2 ++ " * "
 
