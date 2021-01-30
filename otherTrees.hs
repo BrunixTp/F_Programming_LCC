@@ -48,5 +48,37 @@ posfixExpInt exp = case exp of
 
   --2 rose trees
     
-data RTree a = R a [RTree a]
+data RTree a = R a [RTree a] deriving Show
+{- 
+           R 5
+         /    \
+       [ 2     9 ]
+      |  \      |
+     [ 2  4 ]   []
+      |   |
+      [] []
 
+ -}
+rt1 = R 5 [R 2 [R 2 [], R 4 []], R 9 []]
+-- a 
+sumRT :: Num a => RTree a -> a -- sums the elements
+sumRT (R a []) = a
+sumRT (R a l1) = (+) a (sum(map sumRT l1))
+
+-- b
+heightRT :: RTree a -> Int -- calculates the tree's height
+heightRT (R _ []) = 1
+heightRT (R _ l1) = 1 + maximum(map heightRT l1)
+
+-- c
+pruneRT :: Int -> RTree a -> RTree a -- removes all elements after given depth
+pruneRT 0 (R n _) = R n []
+pruneRT x (R n l1) = R n (map (pruneRT (x-1)) l1)
+
+-- d 
+mirrorRT :: RTree a -> RTree a -- generates the symmetrical tree
+mirrorRT (R n l1) = R n (reverse(map mirrorRT l1))
+
+-- e 
+postorder :: RTree a -> [a]
+postorder 
