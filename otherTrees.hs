@@ -1,5 +1,6 @@
 module MoreTrees where
 
+-- 1 Expressions
 data ExpInt = Const Int
             | Sim ExpInt
             | Sum ExpInt ExpInt
@@ -44,4 +45,8 @@ posfixExpInt exp = case exp of
   Sum e1 e2  -> posfixExpInt e1 ++ " " ++ posfixExpInt e2 ++ " + "
   Sub e1 e2  -> posfixExpInt e1 ++ " " ++ posfixExpInt e2 ++ " - "
   Mult e1 e2 -> posfixExpInt e1 ++ " " ++ posfixExpInt e2 ++ " * "
+
+  --2 rose trees
+    
+data RTree a = R a [RTree a]
 
