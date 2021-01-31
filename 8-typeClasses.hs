@@ -30,4 +30,28 @@ instance Show Frac where
     show (F x y) = show x ++ "/" ++ show y
 
 instance Num Frac where
-    
+  (+) = sumFrac
+  (*) = multFrac
+  negate (F x y) = F (-x) y
+  abs (F x y) = F (abs x) (abs y)
+  signum (F x y ) = normalize (F (signum x) (signum y))
+  fromInteger x = F x 1
+sumFrac :: Frac -> Frac -> Frac
+sumFrac (F a b) (F x y) = F ((a*y) + (x*b)) (y*b)
+multFrac :: Frac -> Frac -> Frac
+multFrac (F a b) (F x y) = F (a*x) (b*y)
+
+-- f
+selfrac :: Frac -> [Frac] -> [Frac]
+selfrac f = filter (\x -> f*(fromInteger 2) < x)
+
+-- 2
+--a
+data Exp a = Const a 
+           | Simetrico (Exp a)
+           | Mais (Exp a) (Exp a)
+           | Menos (Exp a) (Exp a)
+           | Mult (Exp a) (Exp a)
+{- 
+instance Show Exp where
+  Show (Const a) = show a -}
