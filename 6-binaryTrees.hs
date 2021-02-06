@@ -163,4 +163,5 @@ percFaltas turma = somaDasFaltas (turma) / contaAlunos (turma) * 100
  contaAlunos Empty = 0
  contaAlunos (Node n e d) = 1 + contaAlunos e + contaAlunos d
 -- f 
---mediaAprov :: Class -> Float
+mediaAprov :: Class -> Float
+mediaAprov

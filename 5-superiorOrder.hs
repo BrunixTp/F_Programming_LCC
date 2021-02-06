@@ -80,3 +80,7 @@ multMat :: Num a => Mat a -> Mat a -> Mat a
 multMat m1 m2 = [[sum(zipWith(*) l1 l2) | l2 <- transpose m2] | l1 <- m1]
 
 -- f
+zipWMat :: (a -> b -> c) -> Mat a -> Mat b -> Mat c
+zipWMat _ [] _ = []
+zipWMat _ _ [] = []
+zipWMat 

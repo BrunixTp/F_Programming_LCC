@@ -1,4 +1,4 @@
-module Ficha4RE where
+ module Ficha4RE where
 
 import Data.Char
 
