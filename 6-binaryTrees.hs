@@ -100,7 +100,7 @@ remove n (Node n' e d)
  | n > n' = Node n' e (remove n d)
  | otherwise = case d of
   Empty -> e
-  _     -> Node m e d'
+  _     -> Node m e d
   where
   (m,d') = minWMin d
   -- TO BE REVISED
@@ -163,5 +163,5 @@ percFaltas turma = somaDasFaltas (turma) / contaAlunos (turma) * 100
  contaAlunos Empty = 0
  contaAlunos (Node n e d) = 1 + contaAlunos e + contaAlunos d
 -- f 
-mediaAprov :: Class -> Float
-mediaAprov
+{- mediaAprov :: Class -> Float
+mediaAprov -}
