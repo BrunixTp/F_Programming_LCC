@@ -26,10 +26,15 @@ calculate :: MSet a -> ([a], Int)
 calculate = foldl (\(acc1,acc2) (a,b)-> (a:acc1, b+acc2)) ([],2)
 
 -- 3
-{- partes :: String -> Char -> [String]
-partes [] _ = [[]]
-partes (x:xs) n q
- -}
+partes :: String -> Char -> [String]
+partes [] = [[]]
+partes l a = partesAux l a []
+
+partesAux :: String -> Char -> String -> [String]
+partesAux [] _ acc = [acc]
+partesAux (h:t) n acc | h == n  = acc: partesAux t n []
+                      | otherwise = partesAux t n [acc ++ [x]]
+
 
 -- 4
 data BTree a = Empty | Node a (BTree a) (BTree a)
@@ -57,6 +62,25 @@ remove n (Node n' e d)
 -- b
 instance (Show a) => Show (BTree a) where
     show (Empty) = "*"
-    show (Node a l r) = "(" ++ show l ++ " <-" ++ show a ++ "->" ++ show r ++ ")"
 
-      
+    show (Node a l r) = "(" ++ show l ++ " <-" ++ show a ++ "-> " ++ show r ++ ")"
+
+-- 5 
+
+sortOn :: Ord b => (a -> b) -> [a] -> [a]
+sortOn _ []     = []
+sortOn f (x:xs) = insertOn f x (sortOn f xs)
+insertOn :: Ord b => (a->b) -> a -> [a] -> [a]
+insertOn _ x []     = [x]
+insertOn f n (x:xs) | f n <= f x =  n:x:xs
+                    | otherwise = x: insertOn f n xs
+
+-- 6
+data FileSystem = File Nome | Dir Nome [FileSystem]
+type Nome = String
+
+fs1 = Dir "usr" [Dir "xxx" [File "abc.txt", File "readme", Dir "PF" [File "exemplo.hs"]], 
+                 Dir "yyy" [], Dir "zzz" [Dir "tmp" [], File "teste.c"] ]
+
+-- a 
+--fichs :: FileSystem -> [Nome]
